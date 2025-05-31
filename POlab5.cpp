@@ -69,9 +69,6 @@ void logRequest(const string& path, int durationMs, const string& status) {
 void handleClient(SOCKET clientSocket) {
     auto t0 = high_resolution_clock::now();
 
-    int flag = 1;
-    setsockopt(clientSocket, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
-
     char buffer[4096];
     int received = recv(clientSocket, buffer, sizeof(buffer) - 1, 0);
     if (received <= 0) {
@@ -123,6 +120,21 @@ void handleClient(SOCKET clientSocket) {
     closesocket(clientSocket);
 }
 
+void acceptClients(SOCKET serverSocket, atomic<bool>& shouldContinue) {
+    while (shouldContinue.load()) {
+        SOCKET client = accept(serverSocket, nullptr, nullptr);
+        if (client == INVALID_SOCKET) {
+            if (!shouldContinue.load()) {
+                break;
+            }
+            cerr << "Accept failed.\n";
+            this_thread::sleep_for(milliseconds(100));
+            continue;
+        }
+        thread(handleClient, client).detach();
+    }
+}
+
 int main() {
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
@@ -136,9 +148,6 @@ int main() {
         WSACleanup();
         return 1;
     }
-
-    int opt = 1;
-    setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, (char*)&opt, sizeof(opt));
 
     sockaddr_in addr{};
     addr.sin_family = AF_INET;
@@ -159,17 +168,28 @@ int main() {
     }
 
     cout << "Server started at http://localhost:" << PORT << "\n";
+    cout << "Enter STOP to shut down the server.\n";
 
-    while (true) {
-        SOCKET client = accept(serverSocket, nullptr, nullptr);
-        if (client == INVALID_SOCKET) {
-            cerr << "Accept failed.\n";
-            continue;
+    atomic<bool> shouldContinue(true);
+    thread acceptThread(acceptClients, serverSocket, ref(shouldContinue));
+
+        string command;
+        while (true) {
+            if (!getline(cin, command)) {
+                break;
+            }
+            if (command == "STOP") {
+                shouldContinue.store(false);
+                closesocket(serverSocket);
+                break;
+            }
+            cout << "Unknown command. Type STOP to shut down.\n";
         }
-        thread(handleClient, client).detach();
+
+    if (acceptThread.joinable()) {
+        acceptThread.join();
     }
 
-    closesocket(serverSocket);
     WSACleanup();
     return 0;
 }
