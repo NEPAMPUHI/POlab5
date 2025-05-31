@@ -1,0 +1,283 @@
+/* Загальні стилі */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #333;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+main {
+    flex: 1 0 auto;
+    padding: 20px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+h2 { /* Загальний стиль для h2 */
+    text-align: center;
+    font-size: 2em;
+}
+
+/* Header */
+header {
+    background-color: #222;
+    padding: 10px 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+nav a {
+    color: #eee;
+    text-decoration: none;
+}
+
+/* Hero */
+.hero {
+    padding: 30px 0;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero-text {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-text h1 {
+    margin-bottom: 10px;
+}
+
+.hero-image {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-image img {
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #DA6363;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #E68A8A;
+    cursor: pointer;
+}
+
+/* About */
+.about {
+    padding: 40px 0;
+}
+
+.about-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.about-card {
+    background-color: #444;
+    padding: 20px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.about-card p {
+    margin: 0;
+}
+
+/* Benefits */
+.benefits {
+    padding: 40px 0;
+    background-color: #333;
+    color: #eee;
+}
+
+.benefits-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.benefits-card {
+    display: flex;
+    align-items: center;
+    width: calc(50% - 20px);
+    min-width: 300px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.benefits-card img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.benefits-card p {
+    margin: 0;
+}
+
+/* Help Section */
+.help-section {
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.help-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.help-list li {
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #222;
+    color: #eee;
+    padding: 20px 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-column {
+    flex: 1;
+    padding: 0 15px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.footer-column:first-child {
+    text-align: left;
+}
+
+.footer-column:last-child {
+    text-align: right;
+}
+
+.footer-column nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.footer-column nav li {
+    margin-bottom: 10px;
+}
+
+.footer-column nav a {
+    color: #eee;
+    text-decoration: none;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .blog-post, .benefits-card, .footer-content, .contact-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .blog-post__image {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .footer-column {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .footer-column:last-child nav ul {
+        align-items: center;
+    }
+
+    .service-grid {
+        grid-template-columns: 1fr;
+    }
+    nav ul {
+        flex-direction: column;
+        display: none; /* ховаємо навігацію */
+        text-align: center;
+    }
+    .burger { /* стиль для кнопки бургер */
+        display: block;
+        cursor: pointer;
+        font-size: 2em;
+    }
+    .header-content {
+        flex-direction: column; /* змінюємо напрямок flex */
+        align-items: flex-start; /* вирівнюємо logo в лівий верхній кут */
+    }
+}
+.burger {
+    display: none; /* ховаємо кнопку бургер на великих екранах */
+}

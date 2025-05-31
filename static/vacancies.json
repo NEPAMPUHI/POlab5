@@ -1,0 +1,16 @@
+{
+  "vacancies": [
+    {
+      "id": 1,
+      "title": "Java Developer",
+      "company": "Tech Co",
+      "location": "Kyiv"
+    },
+    {
+      "id": 2,
+      "title": "Project Manager",
+      "company": "Biz Corp",
+      "location": "Lviv"
+    }
+  ]
+}
